@@ -13,5 +13,11 @@ func main() {
 	}
 
 	app := gin.Default()
+
+	gin.SetMode(cfg.AppMode)
+
 	err = app.Run(cfg.AppHost + ":" + cfg.AppPort)
+	if err != nil {
+		panic(err.Error())
+	}
 }
