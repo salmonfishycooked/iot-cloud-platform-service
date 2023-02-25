@@ -8,6 +8,9 @@
     "user": "root",
     "password": "salmonfishycooked",
     "host": "127.0.0.1",
-    "port": "3306"
+    "port": "3306",
+    "db_name": "iot",
+    "charset": "utf8",
+    "show_sql": true
   }
 }
