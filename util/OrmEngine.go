@@ -1,12 +1,12 @@
 package util
 
 import (
-	_ "github.com/go-sql-driver/mysql"
-	"github.com/go-xorm/xorm"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type Orm struct {
-	*xorm.Engine
+	*gorm.DB
 }
 
 var orm *Orm
@@ -25,19 +25,13 @@ func GetOrm() (*Orm, error) {
 // ormEngineInit 连接数据库，并将 orm 实例赋值给全局变量 orm
 func ormEngineInit(cfg *Config) error {
 	database := cfg.Database
-	conn := database.User + ":" + database.Password + "@tcp(" + database.Host + ":" + database.Port + ")/" + database.DbName + "?charset=" + database.Charset
-	engine, err := xorm.NewEngine("mysql", conn)
+	dsn := database.User + ":" + database.Password + "@tcp(" + database.Host + ":" + database.Port + ")/" + database.DbName + "?charset=" + database.Charset
+	engine, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return err
 	}
 
-	engine.ShowSQL(database.ShowSql)
+	orm = &Orm{engine}
 
-	// 里面放入 model 结构体指针，同步能够部分智能的根据结构体的变动检测表结构的变动，并自动同步。
-	//engine.Sync2(&model.User{})
-
-	orm = &Orm{}
-
-	orm.Engine = engine
 	return nil
 }
