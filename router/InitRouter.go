@@ -39,5 +39,6 @@ func initRoutes() {
 	{
 		controller.InitBatteryRoutes(v1)
 		controller.InitDeviceRoutes(v1)
+		controller.InitHistoryRoutes(v1)
 	}
 }

@@ -30,16 +30,32 @@ func ResponseCommon(code int, data interface{}, msg string, ctx *gin.Context) {
 }
 
 // ResponseOK
-// @Description: 一般成功请求
+// @Description: 一般成功响应
 // @param ctx 上下文
 // @param data 需要返回的数据
 func ResponseOK(ctx *gin.Context, data interface{}) {
 	ResponseCommon(SUCCESS, data, SUCCESS_MESSAGE, ctx)
 }
 
+// ResponseOKWithMsg
+// @Description: 带信息的成功响应
+// @param ctx 上下文
+// @param msg 成功信息
+func ResponseOKWithMsg(ctx *gin.Context, msg string) {
+	ResponseCommon(SUCCESS, nil, msg, ctx)
+}
+
 // ResponseError
-// @Description: 一般错误请求
+// @Description: 一般错误响应
 // @param ctx 上下文
 func ResponseError(ctx *gin.Context) {
 	ResponseCommon(ERROR, nil, ERROR_MESSAGE, ctx)
+}
+
+// ResponseErrorWithMsg
+// @Description: 带信息的错误响应
+// @param ctx 上下文
+// @param msg 错误信息
+func ResponseErrorWithMsg(ctx *gin.Context, msg string) {
+	ResponseCommon(ERROR, nil, msg, ctx)
 }

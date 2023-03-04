@@ -2,21 +2,17 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"iot_backend/model"
+	"iot_backend/param"
 	"iot_backend/service"
 	"iot_backend/util"
 )
-
-// DeviceParam
-// @Description: 前端发来的参数结构体模型
-type DeviceParam struct {
-	ID uint `json:"id"`
-}
 
 // getDeviceData
 // @Description: 获取设备最新状态
 // @param ctx 上下文
 func getDeviceData(ctx *gin.Context) {
-	deviceParam := DeviceParam{}
+	deviceParam := param.DeviceParam{}
 	ctx.ShouldBindJSON(&deviceParam)
 
 	// 传入 ID 有误或者没传
@@ -25,7 +21,15 @@ func getDeviceData(ctx *gin.Context) {
 		return
 	}
 
-	data := service.GetDeviceInfo(deviceParam.ID) // 获取设备信息
+	data := model.Device{}
+	counts := service.GetInfoById(&data, deviceParam.ID) // 获取电池信息
+
+	// 如果没有查询到数据
+	if counts == 0 {
+		util.ResponseErrorWithMsg(ctx, "未查询到相关数据")
+		return
+	}
+	// 正常返回
 	util.ResponseOK(ctx, data)
 }
 

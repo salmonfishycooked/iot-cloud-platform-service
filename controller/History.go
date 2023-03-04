@@ -8,21 +8,21 @@ import (
 	"iot_backend/util"
 )
 
-// getBatteryData
-// @Description: 获取电池最新状态
+// getHistoryData
+// @Description: 获取电池历史数据
 // @param ctx 上下文
-func getBatteryData(ctx *gin.Context) {
-	batteryParam := param.BatteryParam{}
-	ctx.ShouldBindJSON(&batteryParam)
+func getHistoryData(ctx *gin.Context) {
+	param := param.HistoryParam{}
+	ctx.ShouldBindJSON(&param)
 
 	// 传入 ID 有误或者没传
-	if batteryParam.ID == 0 {
+	if param.ID == 0 {
 		util.ResponseError(ctx)
 		return
 	}
 
-	data := model.Battery{}
-	counts := service.GetInfoById(&data, batteryParam.ID) // 获取电池信息
+	var data []model.History
+	counts := service.GetHistoryList(&data, param) // 获取信息
 
 	// 如果没有查询到数据
 	if counts == 0 {
@@ -33,9 +33,9 @@ func getBatteryData(ctx *gin.Context) {
 	util.ResponseOK(ctx, data)
 }
 
-// InitBatteryRoutes
-// @Description: 初始化 Battery 的路由
+// InitHistoryRoutes
+// @Description: 初始化 History 的路由
 // @param group 接收 app 的路由分组
-func InitBatteryRoutes(group *gin.RouterGroup) {
-	group.POST("/battery", getBatteryData)
+func InitHistoryRoutes(group *gin.RouterGroup) {
+	group.POST("/history", getHistoryData)
 }

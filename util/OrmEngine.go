@@ -37,6 +37,7 @@ func ormEngineInit(cfg *Config) error {
 	// 数据库建表
 	orm.AutoMigrate(&model.Battery{}) // Battery 表
 	orm.AutoMigrate(&model.Device{})  // Device 表
+	orm.AutoMigrate(&model.History{}) // History 表
 
 	return nil
 }
