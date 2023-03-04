@@ -1,23 +1,18 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"fmt"
+	"iot_backend/router"
 	"iot_backend/util"
 )
 
 func main() {
-	cfg, err := util.ParseConfig("./config/app.json")
+	//go tcp.StartListenTCP() // 开启 TCP 监听
+	cfg, _ := util.ParseConfig()
+	app := router.GetApp()
 
-	if err != nil {
-		panic(err.Error())
-	}
+	orm, _ := util.GetOrm()
+	fmt.Println(orm)
 
-	app := gin.Default()
-
-	gin.SetMode(cfg.AppMode)
-
-	err = app.Run(cfg.AppHost + ":" + cfg.AppPort)
-	if err != nil {
-		panic(err.Error())
-	}
+	app.Run(":" + cfg.AppPort)
 }

@@ -3,6 +3,7 @@ package util
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"iot_backend/model"
 )
 
 type Orm struct {
@@ -32,6 +33,10 @@ func ormEngineInit(cfg *Config) error {
 	}
 
 	orm = &Orm{engine}
+
+	// 数据库建表
+	orm.AutoMigrate(&model.Battery{}) // Battery 表
+	orm.AutoMigrate(&model.Device{})  // Device 表
 
 	return nil
 }

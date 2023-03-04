@@ -6,6 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.0
 	github.com/go-xorm/xorm v0.7.9
 	gorm.io/driver/mysql v1.4.7
+	gorm.io/gorm v1.24.5
 )
 
 require (
@@ -35,7 +36,6 @@ require (
 	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/gorm v1.24.5 // indirect
 	xorm.io/builder v0.3.12 // indirect
 	xorm.io/core v0.7.3 // indirect
 )

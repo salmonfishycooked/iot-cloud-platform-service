@@ -27,9 +27,14 @@ type DatabaseConfig struct {
 	ShowSql  bool   `json:"show_sql"`
 }
 
-var cfg *Config
+var cfg *Config // 配置项实例
 
-func ParseConfig(path string) (*Config, error) {
+const path = "./config/app.json" // app 配置项路径
+
+// ParseConfig
+// @Description: 获取解析出来的 app 配置项结构体（单例模式）
+// @return *Config app 配置项结构体
+func ParseConfig() (*Config, error) {
 	if cfg != nil {
 		return cfg, nil
 	}
