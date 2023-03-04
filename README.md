@@ -54,6 +54,4 @@ Gorm - 数据库操作框架
 go get
 ```
 
-2. 输入 `go run main.go` 运行项目即可
-
-   
+2. 输入 `go run main.go` 运行项目即可（确保已经开启 MySQL 服务）
