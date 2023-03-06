@@ -37,8 +37,7 @@ func initApp() {
 func initRoutes() {
 	v1 := app.Group("/api/v1")
 	{
-		controller.InitBatteryRoutes(v1)
 		controller.InitDeviceRoutes(v1)
-		controller.InitHistoryRoutes(v1)
+		controller.InitSensorRoutes(v1)
 	}
 }

@@ -6,14 +6,14 @@ import (
 
 // 此处存放通用数据库CRUD方法
 
-// QueryById
-// @Description: 查询数据 by id
+// QueryByTag
+// @Description: 查询数据 by Tag
 // @param data 绑定 Model 层的数据
-// @param id 传入id
+// @param tag 传入Tag
 // @return int64 查询到的条数
-func QueryById(data interface{}, id uint) int64 {
+func QueryByTag(data interface{}, tag string) int64 {
 	db, _ := util.GetOrm()
-	result := db.First(data, id)
+	result := db.Where("tag = ?", tag).Find(&data)
 
 	counts := result.RowsAffected
 

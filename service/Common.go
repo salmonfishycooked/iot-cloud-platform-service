@@ -4,13 +4,13 @@ import "iot_backend/dao"
 
 // 此处存放 Service 层通用方法
 
-// GetInfoById
-// @Description: 获取数据 by id
+// GetInfoByTag
+// @Description: 获取数据 by Tag
 // @param data 绑定的 Model 层数据
-// @param id 传入id
+// @param tag 传入Tag
 // @return int64 查询到的数据条数
-func GetInfoById(data interface{}, id uint) int64 {
-	counts := dao.QueryById(data, id)
+func GetInfoByTag(data interface{}, tag string) int64 {
+	counts := dao.QueryByTag(data, tag)
 	return counts
 }
 

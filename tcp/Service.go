@@ -30,5 +30,12 @@ func process(conn net.Conn) {
 		//t := strings.Trim(s, "收不收得到")
 		// 向当前建立的tcp连接发送数据, 客户端就可以收到服务端发送的数据
 		//conn.Write([]byte("can you receive my message?"))
+		//go sendMessage(conn)
+	}
+}
+
+func sendMessage(conn net.Conn) {
+	for {
+		conn.Write([]byte("\"apitag\":\"Vehicle_condition1\", \"data\":1"))
 	}
 }
