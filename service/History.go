@@ -11,7 +11,7 @@ import (
 // @param history
 // @param param
 // @return int64
-func GetHistoryList(history *[]model.History, param param.HistoryParam) int64 {
-	counts := dao.QueryHistoryData(history, param)
+func GetHistoryList(history []model.History, param param.HistoryParam) int64 {
+	counts := dao.QueryHistoryData(&history, param)
 	return counts
 }

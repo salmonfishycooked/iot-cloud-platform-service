@@ -22,7 +22,7 @@ func getHistoryData(ctx *gin.Context) {
 	}
 
 	var data []model.History
-	counts := service.GetHistoryList(&data, param) // 获取信息
+	counts := service.GetHistoryList(data, param) // 获取信息
 
 	// 如果没有查询到数据
 	if counts == 0 {

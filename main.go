@@ -1,18 +1,17 @@
 package main
 
 import (
-	"fmt"
 	"iot_backend/router"
+	"iot_backend/tcp"
 	"iot_backend/util"
 )
 
 func main() {
-	//go tcp.StartListenTCP() // 开启 TCP 监听
 	cfg, _ := util.ParseConfig()
 	app := router.GetApp()
+	//_, _ = util.GetOrm()
 
-	orm, _ := util.GetOrm()
-	fmt.Println(orm)
+	go app.Run(":" + cfg.AppPort)
 
-	app.Run(":" + cfg.AppPort)
+	tcp.StartListenTCP() // 开启 TCP 监听
 }
