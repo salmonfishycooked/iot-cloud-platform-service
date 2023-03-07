@@ -39,5 +39,6 @@ func initRoutes() {
 	{
 		controller.InitDeviceRoutes(v1)
 		controller.InitSensorRoutes(v1)
+		controller.InitActuatorRoutes(v1)
 	}
 }

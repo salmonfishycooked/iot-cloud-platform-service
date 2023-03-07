@@ -15,12 +15,15 @@ import (
 func QueryDeviceByTag(res *param.DeviceResponse, tag string) int64 {
 	device := model.Device{}
 	var sensors []model.Sensor
+	var actuators []model.Actuator
 
-	counts := dao.QueryByTag(&device, tag)    // 查询设备
-	dao.QuerySensorByDeviceTag(&sensors, tag) // 查询该设备的所有传感器
+	counts := dao.QueryByTag(&device, tag)        // 查询设备
+	dao.QuerySensorByDeviceTag(&sensors, tag)     // 查询该设备的所有传感器
+	dao.QueryActuatorByDeviceTag(&actuators, tag) // 查询该设备的所有传感器
 
 	res.Device = device
 	res.Sensors = sensors
+	res.Actuators = actuators
 
 	return counts
 }

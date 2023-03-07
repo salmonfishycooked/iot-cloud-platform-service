@@ -18,6 +18,7 @@ type DeviceCreateParam struct {
 // DeviceResponse
 // @Description: 后端发送给前端的结构体模型
 type DeviceResponse struct {
-	Device  model.Device   `json:"device"`
-	Sensors []model.Sensor `json:"sensors"`
+	Device    model.Device     `json:"device"`
+	Sensors   []model.Sensor   `json:"sensors"`
+	Actuators []model.Actuator `json:"actuators"`
 }
