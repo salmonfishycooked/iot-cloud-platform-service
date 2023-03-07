@@ -40,6 +40,14 @@ func UpdateSensor(par param.SensorUpdateParam) error {
 		return gin.Error{}
 	}
 
+	// 在历史传感数据里面新增一条记录
+	historySensor := model.HistorySensorData{
+		DeviceTag: par.DeviceTag,
+		SensorTag: par.Tag,
+		Value:     par.Value,
+	}
+	CreateHistorySensor(historySensor)
+
 	return err
 }
 
