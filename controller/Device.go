@@ -15,6 +15,7 @@ func InitDeviceRoutes(group *gin.RouterGroup) {
 	{
 		device.POST("/info", getDeviceInfo)
 		device.POST("/create", createDevice)
+		device.POST("/delete", deleteDevice)
 	}
 }
 
@@ -26,13 +27,13 @@ func getDeviceInfo(ctx *gin.Context) {
 	ctx.ShouldBindJSON(&infoParam)
 
 	// 传入 ID 有误或者没传
-	if infoParam.DeviceTag == "" {
+	if infoParam.Tag == "" {
 		util.ResponseError(ctx)
 		return
 	}
 
 	data := param.DeviceResponse{}
-	counts := service.QueryDeviceByTag(&data, infoParam.DeviceTag) // 获取设备信息
+	counts := service.QueryDeviceByTag(&data, infoParam.Tag) // 获取设备信息
 
 	// 如果没有查询到数据
 	if counts == 0 {
@@ -58,6 +59,27 @@ func createDevice(ctx *gin.Context) {
 	err := service.CreateDevice(createParam) // 创建数据
 	if err != nil {
 		util.ResponseErrorWithMsg(ctx, "输入数据有误或设备tag已存在！")
+		return
+	}
+	// 正常返回
+	util.ResponseOK(ctx, nil)
+}
+
+// deleteDevice
+// @Description: 删除设备
+// @param ctx
+func deleteDevice(ctx *gin.Context) {
+	queryParam := param.DeviceParam{}
+	ctx.ShouldBindJSON(&queryParam)
+
+	if queryParam.Tag == "" {
+		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
+		return
+	}
+
+	err := service.DeleteDevice(queryParam)
+	if err != nil {
+		util.ResponseErrorWithMsg(ctx, "不存在该设备或该设备下存在传感器！")
 		return
 	}
 	// 正常返回

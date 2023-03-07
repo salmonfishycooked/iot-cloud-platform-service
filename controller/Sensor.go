@@ -63,6 +63,9 @@ func createSensor(ctx *gin.Context) {
 	util.ResponseOK(ctx, nil)
 }
 
+// updateSensor
+// @Description: 更新传感器
+// @param ctx
 func updateSensor(ctx *gin.Context) {
 	updateParam := param.SensorUpdateParam{}
 	ctx.ShouldBindJSON(&updateParam)
@@ -81,6 +84,9 @@ func updateSensor(ctx *gin.Context) {
 	util.ResponseOK(ctx, nil)
 }
 
+// deleteSensor
+// @Description: 删除传感器
+// @param ctx
 func deleteSensor(ctx *gin.Context) {
 	queryParam := param.SensorQueryParam{}
 	ctx.ShouldBindJSON(&queryParam)

@@ -5,7 +5,7 @@ import "iot_backend/model"
 // DeviceParam
 // @Description: 前端发来的参数结构体模型
 type DeviceParam struct {
-	DeviceTag string `json:"device_tag"`
+	Tag string `json:"tag"`
 }
 
 // DeviceCreateParam

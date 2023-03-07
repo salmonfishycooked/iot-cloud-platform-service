@@ -1,6 +1,7 @@
 package service
 
 import (
+	"github.com/gin-gonic/gin"
 	"iot_backend/dao"
 	"iot_backend/model"
 	"iot_backend/param"
@@ -34,5 +35,25 @@ func CreateDevice(par param.DeviceCreateParam) error {
 		Name: par.Name,
 	}
 	err := dao.CreateData(&data) // 创建数据
+	return err
+}
+
+// DeleteDevice
+// @Description: 删除设备
+// @param par
+// @return error
+func DeleteDevice(par param.DeviceParam) error {
+	var sensors []model.Sensor
+	counts := dao.QuerySensorByDeviceTag(&sensors, par.Tag) // 查询该设备的所有传感器
+	// 该设备下还存在有传感器，不能删除
+	if counts != 0 {
+		return gin.Error{}
+	}
+
+	// 不存在该设备
+	err, counts := dao.DeleteByTag(&model.Device{}, par.Tag)
+	if counts == 0 {
+		return gin.Error{}
+	}
 	return err
 }

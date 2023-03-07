@@ -31,3 +31,18 @@ func CreateData(data interface{}) error {
 
 	return err
 }
+
+// DeleteByTag
+// @Description: 删除数据 by Tag
+// @param data 需删除的数据 Model 层模型
+// @param tag
+// @return error
+// @return int64 数据条数
+func DeleteByTag(data interface{}, tag string) (error, int64) {
+	db, _ := util.GetOrm()
+	result := db.Where("tag = ?", tag).Delete(&data)
+	err := result.Error
+	counts := result.RowsAffected
+
+	return err, counts
+}
