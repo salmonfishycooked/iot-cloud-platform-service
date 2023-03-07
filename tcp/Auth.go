@@ -12,7 +12,7 @@ import (
 // @param conn 已建立的连接
 // @return bool 鉴权是否成功
 func authDevice(conn *Connection) bool {
-	err := checkTag(conn) // 等待客户端发送tag
+	err := checkTag(conn) // 等待客户端发送设备tag
 
 	// 不发送tag或者这个设备没有在前端创建
 	if err != nil {
