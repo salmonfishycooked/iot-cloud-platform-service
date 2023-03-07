@@ -44,6 +44,7 @@ func StartListenTCP() {
 		canAccess := authDevice(&connection) // 对设备进行鉴权（等待设备发送tag）
 		// 鉴权不通过直接踢掉连接
 		if !canAccess {
+			conn.Write([]byte("鉴权未通过！"))
 			conn.Close()
 			fmt.Println("连接", conn.RemoteAddr(), "已被踢出（未通过鉴权）")
 			continue
