@@ -1,7 +1,6 @@
 package tcp
 
 import (
-	"fmt"
 	"net"
 )
 
@@ -15,7 +14,6 @@ func readFromClient(conn net.Conn) (string, error) {
 	// 将tcp连接读取到的数据读取到byte数组中, 返回读取到的byte的数目
 	n, err := conn.Read(buf[:])
 	if err != nil {
-		fmt.Println(err.Error())
 		return "", err
 	}
 	recStr := string(buf[:n])
