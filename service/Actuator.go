@@ -5,6 +5,7 @@ import (
 	"iot_backend/dao"
 	"iot_backend/model"
 	"iot_backend/param"
+	"iot_backend/tcp"
 )
 
 // CreateActuator
@@ -49,6 +50,34 @@ func DeleteActuator(par param.ActuatorQueryParam) error {
 	// 未找到执行器
 	if counts == 0 {
 		return gin.Error{}
+	}
+
+	return err
+}
+
+// OrderActuator
+// @Description: 执行器下发命令
+// @param par
+// @return error
+func OrderActuator(par param.ActuatorOrderParam) error {
+	// 检查是否存在该执行器
+	counts := dao.QueryActuatorSingle(&model.Actuator{}, par.DeviceTag, par.Tag)
+	if counts == 0 {
+		return gin.Error{}
+	}
+
+	// 下发命令
+	order := "{\"tag\":\"" + par.Tag + "\",\"data\":\"" + par.Value + "\"}"
+	err := tcp.SendOrder(order, par.DeviceTag) // 转发给 TCP 业务逻辑去发出命令
+
+	if err == nil {
+		// 在历史命令数据里面新增一条记录
+		historyOrder := model.HistoryOrderData{
+			DeviceTag:   par.DeviceTag,
+			ActuatorTag: par.Tag,
+			Value:       par.Value,
+		}
+		CreateHistoryOrder(historyOrder)
 	}
 
 	return err

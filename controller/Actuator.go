@@ -46,7 +46,20 @@ func createActuator(ctx *gin.Context) {
 // @Description: 执行器下发命令
 // @param ctx
 func orderActuator(ctx *gin.Context) {
-	// TODO
+	orderParam := param.ActuatorOrderParam{}
+	ctx.ShouldBindJSON(&orderParam)
+	if orderParam.Value == "" || orderParam.DeviceTag == "" || orderParam.Tag == "" {
+		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
+		return
+	}
+
+	err := service.OrderActuator(orderParam) // 发命令
+	if err != nil {
+		util.ResponseErrorWithMsg(ctx, "发送失败！请检查该执行器是否存在或者设备是否上线")
+		return
+	}
+	// 正常返回
+	util.ResponseOKWithMsg(ctx, nil, "命令已发出！")
 }
 
 // QueryActuator
