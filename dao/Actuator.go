@@ -18,6 +18,20 @@ func QueryActuatorByDeviceTag(data *[]model.Actuator, tag string) int64 {
 	return counts
 }
 
+// QueryActuatorSingle
+// @Description: 查询某个执行器的数据
+// @param data 绑定的 Model 层数据
+// @param deviceTag 该传感器所属设备的tag
+// @param tag 传感器tag
+// @return int64 查询到的数据条数
+func QueryActuatorSingle(data *model.Actuator, deviceTag string, tag string) int64 {
+	db, _ := util.GetOrm()
+	result := db.Where("device_tag = ? AND tag = ?", deviceTag, tag).First(&data)
+	counts := result.RowsAffected
+
+	return counts
+}
+
 // DeleteActuator
 // @Description: 删除执行器
 // @param deviceTag 该执行器所属设备的tag

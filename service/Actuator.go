@@ -28,6 +28,17 @@ func CreateActuator(par param.ActuatorCreateParam) error {
 	return err
 }
 
+// QueryActuator
+// @Description: 查询某个执行器的信息
+// @param data 绑定的 Model 层数据
+// @param par 查询参数
+// @return int64 数据条数
+func QueryActuator(data *model.Actuator, par param.ActuatorQueryParam) int64 {
+	count := dao.QueryActuatorSingle(data, par.DeviceTag, par.Tag)
+
+	return count
+}
+
 // DeleteActuator
 // @Description: 删除执行器
 // @param par 查询参数

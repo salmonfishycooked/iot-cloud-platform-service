@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"iot_backend/model"
 	"iot_backend/param"
 	"iot_backend/service"
 	"iot_backend/util"
@@ -16,6 +17,7 @@ func InitActuatorRoutes(group *gin.RouterGroup) {
 		device.POST("/order", orderActuator)
 		device.POST("/create", createActuator)
 		device.POST("/delete", deleteActuator)
+		device.POST("/info", QueryActuator)
 	}
 }
 
@@ -45,6 +47,30 @@ func createActuator(ctx *gin.Context) {
 // @param ctx
 func orderActuator(ctx *gin.Context) {
 	// TODO
+}
+
+// QueryActuator
+// @Description: 获取执行器信息
+// @param ctx
+func QueryActuator(ctx *gin.Context) {
+	queryParam := param.ActuatorQueryParam{}
+	ctx.ShouldBindJSON(&queryParam)
+
+	if queryParam.Tag == "" || queryParam.DeviceTag == "" {
+		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
+		return
+	}
+
+	data := model.Actuator{}
+	counts := service.QueryActuator(&data, queryParam)
+
+	// 如果没有查询到数据
+	if counts == 0 {
+		util.ResponseErrorWithMsg(ctx, "未查询到相关数据")
+		return
+	}
+	// 正常返回
+	util.ResponseOK(ctx, data)
 }
 
 // deleteActuator
