@@ -6,11 +6,10 @@ import (
 )
 
 func main() {
-	cfg, _ := util.ParseConfig()
-	app := router.GetApp()
-	_, _ = util.GetOrm()
+	cfg, _ := util.ParseConfig() // 读取配置
+	app := router.GetApp()       // 初始化 HTTP 服务框架以及路由
 
-	app.Run(":" + cfg.AppPort)
+	app.Run(":" + cfg.AppPort) // 运行 HTTP 服务
 
 	//tcp.StartListenTCP() // 开启 TCP 监听
 }

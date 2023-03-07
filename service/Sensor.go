@@ -42,3 +42,29 @@ func UpdateSensor(par param.SensorUpdateParam) error {
 
 	return err
 }
+
+// QuerySensor
+// @Description: 查询某个传感器的数据
+// @param data 绑定的 Model 层数据
+// @param par 查询参数
+// @return int64 数据条数
+func QuerySensor(data *model.Sensor, par param.SensorQueryParam) int64 {
+	count := dao.QuerySensorSingle(data, par.DeviceTag, par.Tag)
+
+	return count
+}
+
+// DeleteSensor
+// @Description: 删除传感器
+// @param par 查询参数
+// @return error
+func DeleteSensor(par param.SensorQueryParam) error {
+	err, counts := dao.DeleteSensor(par.DeviceTag, par.Tag)
+
+	// 未找到传感器
+	if counts == 0 {
+		return gin.Error{}
+	}
+
+	return err
+}

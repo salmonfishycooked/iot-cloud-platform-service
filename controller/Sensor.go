@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"iot_backend/model"
 	"iot_backend/param"
 	"iot_backend/service"
 	"iot_backend/util"
@@ -13,9 +14,32 @@ import (
 func InitSensorRoutes(group *gin.RouterGroup) {
 	device := group.Group("/sensor")
 	{
+		device.POST("/info", QuerySensor)
 		device.POST("/update", updateSensor)
 		device.POST("/create", createSensor)
+		device.POST("/delete", deleteSensor)
 	}
+}
+
+func QuerySensor(ctx *gin.Context) {
+	queryParam := param.SensorQueryParam{}
+	ctx.ShouldBindJSON(&queryParam)
+
+	if queryParam.Tag == "" || queryParam.DeviceTag == "" {
+		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
+		return
+	}
+
+	data := model.Sensor{}
+	counts := service.QuerySensor(&data, queryParam)
+
+	// 如果没有查询到数据
+	if counts == 0 {
+		util.ResponseErrorWithMsg(ctx, "未查询到相关数据")
+		return
+	}
+	// 正常返回
+	util.ResponseOK(ctx, data)
 }
 
 // createSensor
@@ -35,7 +59,6 @@ func createSensor(ctx *gin.Context) {
 		util.ResponseErrorWithMsg(ctx, "输入数据有误或设备tag不存在或者传感器tag已被占用！")
 		return
 	}
-
 	// 正常返回
 	util.ResponseOK(ctx, nil)
 }
@@ -54,7 +77,24 @@ func updateSensor(ctx *gin.Context) {
 		util.ResponseErrorWithMsg(ctx, "不存在该传感器！")
 		return
 	}
+	// 正常返回
+	util.ResponseOK(ctx, nil)
+}
 
+func deleteSensor(ctx *gin.Context) {
+	queryParam := param.SensorQueryParam{}
+	ctx.ShouldBindJSON(&queryParam)
+
+	if queryParam.Tag == "" || queryParam.DeviceTag == "" {
+		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
+		return
+	}
+
+	err := service.DeleteSensor(queryParam)
+	if err != nil {
+		util.ResponseErrorWithMsg(ctx, "不存在该传感器！")
+		return
+	}
 	// 正常返回
 	util.ResponseOK(ctx, nil)
 }
