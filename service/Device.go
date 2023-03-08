@@ -7,6 +7,15 @@ import (
 	"iot_backend/param"
 )
 
+// QueryDeviceList
+// @Description: 查询设备列表
+// @param data 绑定的 Model 层数据
+// @return int64 数据条数
+func QueryDeviceList(data *[]model.Device) int64 {
+	counts := dao.QueryAll(data)
+	return counts
+}
+
 // QueryDeviceByTag
 // @Description: 返回设备以及它所有的传感器数据（以 Tag 查询）
 // @param res

@@ -2,6 +2,7 @@ package controller
 
 import (
 	"github.com/gin-gonic/gin"
+	"iot_backend/model"
 	"iot_backend/param"
 	"iot_backend/service"
 	"iot_backend/util"
@@ -13,10 +14,20 @@ import (
 func InitDeviceRoutes(group *gin.RouterGroup) {
 	device := group.Group("/device")
 	{
+		device.POST("/list", getDeviceList)
 		device.POST("/info", getDeviceInfo)
 		device.POST("/create", createDevice)
 		device.POST("/delete", deleteDevice)
 	}
+}
+
+// getDeviceList
+// @Description: 获取设备列表
+// @param ctx
+func getDeviceList(ctx *gin.Context) {
+	var data []model.Device
+	service.QueryDeviceList(&data)
+	util.ResponseOK(ctx, data)
 }
 
 // getDeviceData

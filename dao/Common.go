@@ -6,6 +6,19 @@ import (
 
 // 此处存放通用数据库CRUD方法
 
+// QueryAll
+// @Description: 查询表中所有记录
+// @param data 绑定的 Model 层数据
+// @return int64 数据条数
+func QueryAll(data interface{}) int64 {
+	db, _ := util.GetOrm()
+
+	result := db.Find(data)
+	counts := result.RowsAffected
+
+	return counts
+}
+
 // QueryByTag
 // @Description: 查询数据 by Tag
 // @param data 绑定 Model 层的数据
