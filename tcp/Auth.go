@@ -3,8 +3,10 @@ package tcp
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"iot_backend/dao"
 	"iot_backend/model"
+	"time"
 )
 
 // authDevice
@@ -27,8 +29,11 @@ func authDevice(conn *Connection) bool {
 // @Description: 检查客户端是否发出tag
 // @return error
 func checkTag(conn *Connection) error {
-	//conn.conn.SetReadDeadline(time.Now().Add(time.Duration(TIMEOUT) * time.Second)) // 对连接设置读数据的超时时间
-	recStr, _ := readFromClient(conn.conn) // 从客户端读取DeviceTag
+	conn.conn.SetReadDeadline(time.Now().Add(time.Duration(TIMEOUT) * time.Second)) // 对连接设置读数据的超时时间
+	recStr, _ := readFromClient(conn.conn)                                          // 从客户端读取DeviceTag
+	conn.conn.SetReadDeadline(time.Time{})                                          // 取消读超时时间
+	fmt.Println("recstr:", recStr)
+
 	data := DeviceTag{}
 	if err := json.Unmarshal([]byte(recStr), &data); err == nil {
 		counts := dao.QueryByTag(&model.Device{}, data.Tag)

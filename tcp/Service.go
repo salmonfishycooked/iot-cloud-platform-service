@@ -10,6 +10,18 @@ import (
 
 // TCP 业务逻辑
 func process(conn Connection) {
+	canAccess := authDevice(&conn) // 对设备进行鉴权（等待设备发送tag）
+	// 鉴权不通过直接踢掉连接
+	if !canAccess {
+		conn.conn.Write([]byte("鉴权未通过！不存在该设备或者该设备已经上线！"))
+		conn.conn.Close()
+		fmt.Println("连接", conn.conn.RemoteAddr(), "已被踢出（未通过鉴权）")
+		return
+	}
+	//通过鉴权
+	conn.conn.Write([]byte("鉴权通过！您的设备标识名: " + conn.DeviceTag))
+	server.connections = append(server.connections, conn) // 加入连接数组里面，方便管理
+
 	go keepAlive(conn) // 进行心跳检测
 	for {
 		recStr, err := readFromClient(conn.conn) // 从客户端读数据

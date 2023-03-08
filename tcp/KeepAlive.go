@@ -17,7 +17,7 @@ func keepAlive(conn Connection) {
 	fmt.Println("设备" + conn.DeviceTag + "已上线！")
 	dao.UpdateDeviceStatus(conn.DeviceTag, true) // 更新设备在线状态
 	for {
-		//conn.SetReadDeadline(time.Now().Add(time.Duration(TIMEOUT) * time.Second)) // 对连接设置 写 超时时间
+		//conn.conn.SetReadDeadline(time.Now().Add(time.Duration(TIMEOUT) * time.Second)) // 对连接设置 读 超时时间
 		_, err := conn.conn.Write([]byte("a"))
 		if err != nil {
 			fmt.Println("设备" + conn.DeviceTag + "已离线！")
