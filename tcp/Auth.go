@@ -13,8 +13,10 @@ import (
 // @return bool 鉴权是否成功
 func authDevice(conn *Connection) bool {
 	err := checkTag(conn) // 等待客户端发送设备tag
-
-	// 不发送tag或者这个设备没有在前端创建
+	if err != nil {
+		return false
+	}
+	err = checkRepeatDevice(conn.DeviceTag) // 检查设备是否重复上线
 	if err != nil {
 		return false
 	}
@@ -38,6 +40,17 @@ func checkTag(conn *Connection) error {
 		conn.DeviceTag = data.Tag // 鉴权成功，设置标识tag
 	} else {
 		return err
+	}
+	return nil
+}
+
+// checkRepeatDevice
+// @Description: 检查设备是否已经上线（防止同一台设备上线多次）
+func checkRepeatDevice(deviceTag string) error {
+	for _, val := range server.connections {
+		if val.DeviceTag == deviceTag {
+			return errors.New("error")
+		}
 	}
 	return nil
 }
