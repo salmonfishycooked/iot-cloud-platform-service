@@ -43,7 +43,7 @@ func DeleteHistorySensor(sensorTag string) int64 {
 func QueryHistoryActuator(data *[]model.HistoryOrderData, deviceTag string, ActuatorTag string, page int, pageSize int) int64 {
 	db, _ := util.GetOrm()
 	offset := (page - 1) * pageSize
-	result := db.Where("device_tag = ? AND actuator_tag = ?", deviceTag, ActuatorTag).Offset(offset).Limit(pageSize).Order("created desc").Find(&data)
+	result := db.Where("device_tag = ? AND actuator_tag = ?", deviceTag, ActuatorTag).Offset(offset).Limit(pageSize).Find(&data)
 	counts := result.RowsAffected
 
 	return counts
