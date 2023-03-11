@@ -5,6 +5,8 @@ package param
 type HistorySensorParam struct {
 	DeviceTag string `json:"device_tag"`
 	SensorTag string `json:"sensor_tag"`
+	Page      int    `json:"page"`
+	PageSize  int    `json:"page_size"`
 }
 
 // HistoryActuatorParam
@@ -12,4 +14,6 @@ type HistorySensorParam struct {
 type HistoryActuatorParam struct {
 	DeviceTag   string `json:"device_tag"`
 	ActuatorTag string `json:"actuator_tag"`
+	Page        int    `json:"page"`
+	PageSize    int    `json:"page_size"`
 }
