@@ -52,6 +52,9 @@ func DeleteActuator(par param.ActuatorQueryParam) error {
 		return gin.Error{}
 	}
 
+	// 找到执行器，将其历史命令数据全部删除
+	dao.DeleteHistoryOrder(par.Tag)
+
 	return err
 }
 

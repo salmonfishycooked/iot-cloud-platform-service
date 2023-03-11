@@ -74,5 +74,7 @@ func DeleteSensor(par param.SensorQueryParam) error {
 		return gin.Error{}
 	}
 
+	// 找到传感器，将其历史传感数据全部删除
+	dao.DeleteHistorySensor(par.Tag)
 	return err
 }

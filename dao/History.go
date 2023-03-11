@@ -19,6 +19,18 @@ func QueryHistorySensor(data *[]model.HistorySensorData, deviceTag string, senso
 	return counts
 }
 
+// DeleteHistorySensor
+// @Description: 删除历史传感数据
+// @param sensorTag 对应的传感器tag
+// @return int64 删除的数据条数
+func DeleteHistorySensor(sensorTag string) int64 {
+	db, _ := util.GetOrm()
+	result := db.Where("sensor_tag = ?", sensorTag).Delete(&model.HistorySensorData{})
+	counts := result.RowsAffected
+
+	return counts
+}
+
 // QueryHistoryActuator
 // @Description: 获取历史命令数据
 // @param data 绑定的 Model 层数据
@@ -28,6 +40,18 @@ func QueryHistorySensor(data *[]model.HistorySensorData, deviceTag string, senso
 func QueryHistoryActuator(data *[]model.HistoryOrderData, deviceTag string, ActuatorTag string) int64 {
 	db, _ := util.GetOrm()
 	result := db.Where("device_tag = ? AND actuator_tag = ?", deviceTag, ActuatorTag).Find(&data)
+	counts := result.RowsAffected
+
+	return counts
+}
+
+// DeleteHistoryOrder
+// @Description: 删除历史命令数据
+// @param actuatorTag 对应的执行器tag
+// @return int64 删除的数据条数
+func DeleteHistoryOrder(actuatorTag string) int64 {
+	db, _ := util.GetOrm()
+	result := db.Where("actuator_tag = ?", actuatorTag).Delete(&model.HistoryOrderData{})
 	counts := result.RowsAffected
 
 	return counts
