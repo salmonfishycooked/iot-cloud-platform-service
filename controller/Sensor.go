@@ -49,7 +49,7 @@ func createSensor(ctx *gin.Context) {
 	createParam := param.SensorCreateParam{}
 	ctx.ShouldBindJSON(&createParam)
 
-	if createParam.Tag == "" || createParam.Name == "" || createParam.DeviceTag == "" || createParam.Unit == "" {
+	if createParam.Tag == "" || createParam.Name == "" || createParam.DeviceTag == "" {
 		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
 		return
 	}
