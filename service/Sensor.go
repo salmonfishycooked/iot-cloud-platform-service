@@ -16,6 +16,7 @@ func CreateSensor(par param.SensorCreateParam) error {
 		Tag:       par.Tag,
 		Name:      par.Name,
 		DeviceTag: par.DeviceTag,
+		Unit:      par.Unit,
 	}
 
 	// 检测 DeviceTag 在设备表里是否存在

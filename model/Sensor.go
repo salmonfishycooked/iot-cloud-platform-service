@@ -6,6 +6,7 @@ type Sensor struct {
 	Tag       string `gorm:"type:VARCHAR(255);not NULL;unique" json:"tag"`
 	Name      string `gorm:"type:VARCHAR(255);not NULL" json:"name"`
 	Value     string `gorm:"type:VARCHAR(255);" json:"value"`
+	Unit      string `gorm:"type:VARCHAR(255);" json:"unit"`
 	DeviceTag string `gorm:"type:VARCHAR(255);not NULL" json:"device_tag"`
 	Created   int64  `gorm:"autoCreateTime" json:"created"`
 	Updated   int64  `gorm:"autoUpdateTime" json:"updated"`

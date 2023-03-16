@@ -30,6 +30,8 @@ func initApp() {
 	app = &App{gin.Default()}
 	gin.SetMode(cfg.AppMode) // 设置 Gin 运行的模式
 
+	app.Use(util.Cors()) // 设置跨域
+
 	initRoutes() // 初始化路由
 }
 

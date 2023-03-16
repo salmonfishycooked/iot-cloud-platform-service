@@ -26,7 +26,7 @@ func getHistorySensor(ctx *gin.Context) {
 	historyParam := param.HistorySensorParam{}
 	ctx.ShouldBindJSON(&historyParam)
 
-	if historyParam.SensorTag == "" || historyParam.DeviceTag == "" || historyParam.Page == 0 || historyParam.PageSize == 0 {
+	if historyParam.SensorTag == "" || historyParam.DeviceTag == "" || historyParam.StartTime == 0 || historyParam.EndTime == 0 {
 		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
 		return
 	}
@@ -48,7 +48,7 @@ func getHistoryOrder(ctx *gin.Context) {
 	historyParam := param.HistoryActuatorParam{}
 	ctx.ShouldBindJSON(&historyParam)
 
-	if historyParam.ActuatorTag == "" || historyParam.DeviceTag == "" || historyParam.Page == 0 || historyParam.PageSize == 0 {
+	if historyParam.ActuatorTag == "" || historyParam.DeviceTag == "" || historyParam.StartTime == 0 || historyParam.EndTime == 0 {
 		util.ResponseErrorWithMsg(ctx, "输入数据有误！")
 		return
 	}

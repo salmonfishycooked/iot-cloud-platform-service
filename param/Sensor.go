@@ -6,6 +6,7 @@ type SensorCreateParam struct {
 	Tag       string `json:"tag"`
 	Name      string `json:"name"`
 	DeviceTag string `json:"device_tag"`
+	Unit      string `json:"unit"`
 }
 
 // SensorUpdateParam

@@ -12,7 +12,7 @@ import (
 // @param par
 // @return int64 数据条数
 func GetHistorySensor(data *[]model.HistorySensorData, par param.HistorySensorParam) int64 {
-	counts := dao.QueryHistorySensor(data, par.DeviceTag, par.SensorTag, par.Page, par.PageSize)
+	counts := dao.QueryHistorySensor(data, par.DeviceTag, par.SensorTag, par.StartTime, par.EndTime)
 
 	return counts
 }
@@ -23,7 +23,7 @@ func GetHistorySensor(data *[]model.HistorySensorData, par param.HistorySensorPa
 // @param par
 // @return int64 数据条数
 func GetHistoryOrder(data *[]model.HistoryOrderData, par param.HistoryActuatorParam) int64 {
-	counts := dao.QueryHistoryActuator(data, par.DeviceTag, par.ActuatorTag, par.Page, par.PageSize)
+	counts := dao.QueryHistoryActuator(data, par.DeviceTag, par.ActuatorTag, par.StartTime, par.EndTime)
 
 	return counts
 }

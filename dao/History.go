@@ -13,10 +13,9 @@ import (
 // @param page 分页
 // @param pageSize 分页
 // @return int64 数据条数
-func QueryHistorySensor(data *[]model.HistorySensorData, deviceTag string, sensorTag string, page int, pageSize int) int64 {
+func QueryHistorySensor(data *[]model.HistorySensorData, deviceTag string, sensorTag string, startTime int64, endTime int64) int64 {
 	db, _ := util.GetOrm()
-	offset := (page - 1) * pageSize
-	result := db.Where("device_tag = ? AND sensor_tag = ?", deviceTag, sensorTag).Offset(offset).Limit(pageSize).Order("created desc").Find(&data)
+	result := db.Where("device_tag = ? AND sensor_tag = ?", deviceTag, sensorTag).Where("created >= ? AND created <= ?", startTime, endTime).Order("created desc").Find(&data)
 	counts := result.RowsAffected
 
 	return counts
@@ -40,10 +39,9 @@ func DeleteHistorySensor(sensorTag string) int64 {
 // @param deviceTag 设备tag
 // @param ActuatorTag 执行器tag
 // @return int64 数据条数
-func QueryHistoryActuator(data *[]model.HistoryOrderData, deviceTag string, ActuatorTag string, page int, pageSize int) int64 {
+func QueryHistoryActuator(data *[]model.HistoryOrderData, deviceTag string, ActuatorTag string, startTime int64, endTime int64) int64 {
 	db, _ := util.GetOrm()
-	offset := (page - 1) * pageSize
-	result := db.Where("device_tag = ? AND actuator_tag = ?", deviceTag, ActuatorTag).Offset(offset).Limit(pageSize).Find(&data)
+	result := db.Where("device_tag = ? AND actuator_tag = ?", deviceTag, ActuatorTag).Where("created >= ? AND created <= ?", startTime, endTime).Find(&data)
 	counts := result.RowsAffected
 
 	return counts

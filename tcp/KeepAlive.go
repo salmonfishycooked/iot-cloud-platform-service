@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	AlivePeriod = 3 // 发送心跳检测周期（单位：s）
+	AlivePeriod = 10 // 发送心跳检测周期（单位：s）
 )
 
 // keepAlive
